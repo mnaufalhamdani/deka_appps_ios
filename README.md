@@ -1,6 +1,6 @@
 # deka_appps_ios
 
-DekaApppsIos
+DekaApppsIos : Untuk belajar flutter persiapan aplikasi Deka Apps untuk IOS dan Android
 
 ## Getting Started
 
