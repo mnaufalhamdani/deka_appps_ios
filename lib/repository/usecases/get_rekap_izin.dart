@@ -1,0 +1,18 @@
+import 'package:deka_appps_ios/models/response/rekap_izin_model.dart';
+
+import '../../core/data/data_state.dart';
+import '../rekap_izin_repository.dart';
+
+abstract class GetRekapIzinUseCaseImpl<Type, Params> {
+  Future<Type> getRekapIzin({Params nik});
+}
+
+class GetRekapIzinUseCase implements GetRekapIzinUseCaseImpl<DataState<List<RekapIzinModel>>, String> {
+  final RekapIzinRepository _repository;
+  GetRekapIzinUseCase(this._repository);
+
+  @override
+  Future<DataState<List<RekapIzinModel>>> getRekapIzin({String ? nik}) {
+    return _repository.getRekapIzin(nik!);
+  }
+}
