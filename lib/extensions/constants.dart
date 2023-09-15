@@ -1,4 +1,5 @@
 const String BASE_URL = "https://dkapi.duakelinci.id:9393/api/webusagi/v2/hc/";
+const int BASE_TIMEOUT = 60000 * 1;//1 MENIT
 const String TYPE_APLIKASI = "hc";
 const String NIK_EXAMPLE = '20101720';
 

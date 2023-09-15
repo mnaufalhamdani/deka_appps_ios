@@ -1,7 +1,6 @@
 import 'package:deka_appps_ios/config/database_config.dart';
 import 'package:deka_appps_ios/config/service/account/account_service.dart';
 import 'package:deka_appps_ios/config/service/rekap_izin/rekap_izin_service.dart';
-import 'package:deka_appps_ios/config/service/sync_data_master/sync_data_master_service.dart';
 import 'package:deka_appps_ios/repository/login_repository.dart';
 import 'package:deka_appps_ios/repository/usecases/get_login.dart';
 import 'package:deka_appps_ios/repository/usecases/get_sync_data_master.dart';
@@ -13,6 +12,7 @@ import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_view_cuti_bloc.da
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../config/service/other/sync_data_master_service.dart';
 import '../repository/rekap_izin_repository.dart';
 import '../repository/sync_data_master_repository.dart';
 import '../repository/usecases/get_rekap_izin.dart';

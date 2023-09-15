@@ -7,71 +7,69 @@ part of 'rekap_izin_service.dart';
 // **************************************************************************
 
 class RekapIzinServiceImpl implements RekapIzinService {
-  RekapIzinServiceImpl(this._dio, {this.baseUrl}) {
-    baseUrl ??= BASE_URL;
+  RekapIzinServiceImpl(this._dio) {
+    _dio.options.baseUrl = BASE_URL;
+    _dio.options.connectTimeout = BASE_TIMEOUT;
+    _dio.options.sendTimeout = BASE_TIMEOUT;
   }
 
   final Dio _dio;
-  String? baseUrl;
-
-  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
-    if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
-      if (T == String) {
-        requestOptions.responseType = ResponseType.plain;
-      } else {
-        requestOptions.responseType = ResponseType.json;
-      }
-    }
-    return requestOptions;
-  }
 
   @override
   Future<HttpResponse<List<RekapIzinModel>>> getRekapIzin({nik}) async {
-    const extra = <String, dynamic>{};
-    final headers = <String, dynamic>{};
-    final data = FormData.fromMap({
-      'nik': nik
-    });
+    try {
+      final extra = <String, dynamic>{};
+      final headers = <String, dynamic>{};
+      final params = <String, dynamic>{};
+      final data = FormData.fromMap({
+        'nik': nik
+      });
 
-    final result = await _dio.fetch<Map<String,dynamic>>(
-        _setStreamType<HttpResponse<void>>(
-            Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true)
-                .compose(_dio.options, 'perizinan/list', data: data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+      final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
+      final result = await _dio.request('perizinan/list',
+          data: data,
+          queryParameters: params,
+          options: options
+      );
 
-    if(result.statusCode == HttpStatus.ok) {
-      List<RekapIzinModel> value = result.data!['data']
-          .map<RekapIzinModel>((dynamic i) => RekapIzinModel.fromJson(i as Map<String, dynamic>))
-          .toList();
-      return HttpResponse(value, result);
-    } else {
-      throw ErrorModel.fromJson(result.data ?? ErrorModel(message: result.data.toString()));
+      if(result.statusCode == HttpStatus.ok) {
+        List<RekapIzinModel> value = result.data!['data']
+            .map<RekapIzinModel>((dynamic i) => RekapIzinModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return HttpResponse(value, result);
+      } else {
+        throw ErrorModel.fromRequest(result.data);
+      }
+    }on DioError catch (e){
+      throw ErrorModel(message: e.message.toString());
     }
-
   }
 
   @override
   Future<HttpResponse<ViewCutiModel>> getViewCuti({nik}) async {
-    const extra = <String, dynamic>{};
-    final headers = <String, dynamic>{};
-    final data = FormData.fromMap({
-      'nik': nik
-    });
+    try {
+      final extra = <String, dynamic>{};
+      final headers = <String, dynamic>{};
+      final params = <String, dynamic>{};
+      final data = FormData.fromMap({
+        'nik': nik
+      });
 
-    final result = await _dio.fetch<Map<String,dynamic>>(
-        _setStreamType<HttpResponse<void>>(
-            Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true)
-                .compose(_dio.options, 'perizinan/view-cuti', data: data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+      final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
+      final result = await _dio.request('perizinan/view-cuti',
+          data: data,
+          queryParameters: params,
+          options: options
+      );
 
-
-    if(result.statusCode == HttpStatus.ok) {
-      ViewCutiModel value = ViewCutiModel.fromJson(result.data!['data']);
-      return HttpResponse(value, result);
-    } else {
-      throw ErrorModel.fromJson(result.data ?? ErrorModel(message: result.data.toString()));
+      if(result.statusCode == HttpStatus.ok) {
+        ViewCutiModel value = ViewCutiModel.fromJson(result.data!['data']);
+        return HttpResponse(value, result);
+      } else {
+        throw ErrorModel.fromRequest(result.data);
+      }
+    }on DioError catch (e){
+      throw ErrorModel(message: e.message.toString());
     }
   }
 

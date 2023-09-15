@@ -18,4 +18,12 @@ class ErrorModel {
       message: json['message'] as String
     );
   }
+
+  factory ErrorModel.fromRequest(dynamic data) {
+    if(data.toString().contains("Bad Request")){
+      return ErrorModel(message: data.toString());
+    }else{
+      return ErrorModel.fromJson(data ?? ErrorModel(message: data.toString()));
+    }
+  }
 }

@@ -1,8 +1,8 @@
-import 'package:deka_appps_ios/config/service/sync_data_master/sync_data_master_service.dart';
 import 'package:deka_appps_ios/models/response/sync_data_master_model.dart';
 import 'package:intl/intl.dart';
 
 import '../config/database_config.dart';
+import '../config/service/other/sync_data_master_service.dart';
 import '../core/data/data_state.dart';
 import '../models/entities/profile/profile.dart';
 import '../models/mapper/profile_mapper.dart';

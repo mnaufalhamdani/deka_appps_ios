@@ -1,76 +1,76 @@
 
 import '../entities/rekap_izin/rekap_izin.dart';
 
-class RekapIzinModel extends RekapIzinEntity {
+class RekapIzinModel {
+  String? code;
+  String? jpayrollId;
+  String? name;
+  String? nik;
+  String? costCenterCode;
+  String? reasonType;
+  String? reasonId;
+  String? potongCuti;
+  String? startDate;
+  String? startTime;
+  String? endDate;
+  String? endTime;
+  String? lamaCuti;
+  String? tglBatal;
+  String? latitude;
+  String? longitude;
+  String? jamKembali;
+  String? photo1;
+  String? photo2;
+  String? photo3;
+  String? keterangan;
+  String? status;
+  String? statusApproval;
+  String? statusKembali;
+  String? statusBatal;
+  String? createdAt;
+  String? updatedAt;
+  String? createdBy;
+  String? updatedBy;
+  String? reasonName;
+  String? reasonTypeName;
+  String? userApproval;
+  String? descApproval;
+
   RekapIzinModel({
-      String ? code,
-      String ? jpayrollId,
-      String ? name,
-      String ? nik,
-      String ? costCenterCode,
-      String ? reasonType,
-      String ? reasonId,
-      String ? potongCuti,
-      String ? startDate,
-      String ? startTime,
-      String ? endDate,
-      String ? endTime,
-      String ? lamaCuti,
-      String ? tglBatal,
-      String ? latitude,
-      String ? longitude,
-      String ? jamKembali,
-      String ? photo1,
-      String ? photo2,
-      String ? photo3,
-      String ? keterangan,
-      String ? status,
-      String ? statusApproval,
-      String ? statusKembali,
-      String ? statusBatal,
-      String ? createdAt,
-      String ? updatedAt,
-      String ? createdBy,
-      String ? updatedBy,
-      String ? reasonName,
-      String ? reasonTypeName,
-      String ? userApproval,
-      String ? descApproval,
-  }): super(
-      code : code,
-      jpayrollId : jpayrollId,
-      name : name,
-      nik : nik,
-      costCenterCode : costCenterCode,
-      reasonType : reasonType,
-      reasonId : reasonId,
-      potongCuti : potongCuti,
-      startDate : startDate,
-      startTime : startTime,
-      endDate : endDate,
-      endTime : endTime,
-      lamaCuti : lamaCuti,
-      tglBatal : tglBatal,
-      latitude : latitude,
-      longitude : longitude,
-      jamKembali : jamKembali,
-      photo1 : photo1,
-      photo2 : photo2,
-      photo3 : photo3,
-      keterangan : keterangan,
-      status : status,
-      statusApproval : statusApproval,
-      statusKembali : statusKembali,
-      statusBatal : statusBatal,
-      createdAt : createdAt,
-      updatedAt : updatedAt,
-      createdBy : createdBy,
-      updatedBy : updatedBy,
-      reasonName : reasonName,
-      reasonTypeName : reasonTypeName,
-      userApproval : userApproval,
-      descApproval : descApproval,
-  );
+    this.code,
+    this.jpayrollId,
+    this.name,
+    this.nik,
+    this.costCenterCode,
+    this.reasonType,
+    this.reasonId,
+    this.potongCuti,
+    this.startDate,
+    this.startTime,
+    this.endDate,
+    this.endTime,
+    this.lamaCuti,
+    this.tglBatal,
+    this.latitude,
+    this.longitude,
+    this.jamKembali,
+    this.photo1,
+    this.photo2,
+    this.photo3,
+    this.keterangan,
+    this.status,
+    this.statusApproval,
+    this.statusKembali,
+    this.statusBatal,
+    this.createdAt,
+    this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
+    this.reasonName,
+    this.reasonTypeName,
+    this.userApproval,
+    this.descApproval,
+});
 
   factory RekapIzinModel.fromJson(Map<String, dynamic> json) {
     return RekapIzinModel(
@@ -109,43 +109,4 @@ class RekapIzinModel extends RekapIzinEntity {
       descApproval: json['desc_approval'],
     );
   }
-
-  // Map<String, dynamic> toJson() {
-  //   final map = <String, dynamic>{};
-  //   map['code'] = code;
-  //   map['jpayroll_id'] = jpayrollId;
-  //   map['name'] = name;
-  //   map['nik'] = nik;
-  //   map['cost_center_code'] = costCenterCode;
-  //   map['reason_type'] = reasonType;
-  //   map['reason_id'] = reasonId;
-  //   map['potong_cuti'] = potongCuti;
-  //   map['start_date'] = startDate;
-  //   map['start_time'] = startTime;
-  //   map['end_date'] = endDate;
-  //   map['end_time'] = endTime;
-  //   map['lama_cuti'] = lamaCuti;
-  //   map['tgl_batal'] = tglBatal;
-  //   map['latitude'] = latitude;
-  //   map['longitude'] = longitude;
-  //   map['jam_kembali'] = jamKembali;
-  //   map['photo_1'] = photo1;
-  //   map['photo_2'] = photo2;
-  //   map['photo_3'] = photo3;
-  //   map['keterangan'] = keterangan;
-  //   map['status'] = status;
-  //   map['status_approval'] = statusApproval;
-  //   map['status_kembali'] = statusKembali;
-  //   map['status_batal'] = statusBatal;
-  //   map['created_at'] = createdAt;
-  //   map['updated_at'] = updatedAt;
-  //   map['created_by'] = createdBy;
-  //   map['updated_by'] = updatedBy;
-  //   map['reason_name'] = reasonName;
-  //   map['reason_type_name'] = reasonTypeName;
-  //   map['user_approval'] = userApproval;
-  //   map['desc_approval'] = descApproval;
-  //   return map;
-  // }
-
 }

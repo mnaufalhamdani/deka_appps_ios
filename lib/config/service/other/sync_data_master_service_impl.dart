@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'account_service.dart';
+part of 'sync_data_master_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class AccountServiceImpl implements AccountService {
-  AccountServiceImpl(this._dio) {
+class SyncDataMasterServiceImpl implements SyncDataMasterService {
+  SyncDataMasterServiceImpl(this._dio) {
     _dio.options.baseUrl = BASE_URL;
     _dio.options.connectTimeout = BASE_TIMEOUT;
     _dio.options.sendTimeout = BASE_TIMEOUT;
@@ -16,30 +16,27 @@ class AccountServiceImpl implements AccountService {
   final Dio _dio;
 
   @override
-  Future<HttpResponse<LoginModel>> getLogin({
-    username,
-    password,
-    firebaseId
-  }) async {
+  Future<HttpResponse<SyncDataMasterModel>> syncDataMaster({String? user_id, String? date, String? slug_database}) async {
     try {
       final extra = <String, dynamic>{};
       final headers = <String, dynamic>{};
-      final params = <String, dynamic>{};
+      final params = <String, dynamic>{
+        'user_id': user_id,
+        'date': date,
+      };
       final data = FormData.fromMap({
-        'username' : username,
-        'password' : password,
-        'firebase_id' : firebaseId
+        'slug_database': slug_database
       });
 
       final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
-      final result = await _dio.request('login',
+      final result = await _dio.request('sync-data-master',
           data: data,
           queryParameters: params,
           options: options
       );
 
       if(result.statusCode == HttpStatus.ok) {
-        LoginModel value = LoginModel.fromJson(result.data!['data']['profile']);
+        SyncDataMasterModel value = SyncDataMasterModel.fromJson(result.data!['data']);
         return HttpResponse(value, result);
       } else {
         throw ErrorModel.fromRequest(result.data);
@@ -48,4 +45,5 @@ class AccountServiceImpl implements AccountService {
       throw ErrorModel(message: e.message.toString());
     }
   }
+
 }
