@@ -37,7 +37,7 @@ class LoginRepositoryImpl extends LoginRepository {
 
       return getProfile();
     } on ErrorModel catch (e) {
-      throw DataFailed(e);
+      return DataFailed(e);
     }
   }
 

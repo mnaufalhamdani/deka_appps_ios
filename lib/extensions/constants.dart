@@ -6,10 +6,13 @@ const String NIK_EXAMPLE = '20101720';
 
 const String varDashboard = "Dashboard";
 const String varRekapIzin = "Rekap Izin";
-const String varGreeting = "Semoga Harimu Menyenangkan";
+const String varGreeting = "Semoga Hari Anda Menyenangkan";
+const String varGreetingLogin = "Silahkan login untuk melanjutkan";
 const String varTotalAlpha = "Total Alpha";
 const String varSisaCuti = "Sisa Cuti";
 const String varTotalIzin = "Total Izin";
 const String varIzinBelumDisetujui = "Izin Belum Disetujui";
 const String varIzinDisetujui = "Izin Disetujui";
 const String varIzinDitolak = "Izin Ditolak";
+const String varUsername = "Username";
+const String varPassword = "Password";

@@ -6,9 +6,9 @@ import 'package:deka_appps_ios/repository/usecases/get_login.dart';
 import 'package:deka_appps_ios/repository/usecases/get_sync_data_master.dart';
 import 'package:deka_appps_ios/repository/usecases/get_view_cuti.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/local/local_profile_bloc.dart';
-import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_login_bloc.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_sync_data_master_bloc.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_view_cuti_bloc.dart';
+import 'package:deka_appps_ios/ui/login/bloc/remote/remote_login_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 

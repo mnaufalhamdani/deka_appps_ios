@@ -14,6 +14,7 @@ class RemoteLoginBloc extends Bloc<RemoteLoginEvent, BaseBlocState>{
   }
 
   void onLoad(GetLogin event, Emitter < BaseBlocState > emit) async {
+    emit(BaseResponseLoading());
     final dataState = await useCase.getLogin(username: event.username, password: event.password);
 
     if (dataState is DataSuccess) {

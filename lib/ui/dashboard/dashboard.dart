@@ -9,7 +9,7 @@ import 'package:deka_appps_ios/resource/showSnackbarMessage.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/local/local_profile_bloc.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_sync_data_master_bloc.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_view_cuti_bloc.dart';
-import 'package:deka_appps_ios/ui/rekap_izin/rekap_izin_page.dart';
+import 'package:deka_appps_ios/ui/rekap_izin/rekap_izin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
