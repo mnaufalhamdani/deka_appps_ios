@@ -41,6 +41,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: "^0.10.0"
   flutter_lints: ^2.0.0
   retrofit_generator: 3.0.1+1
   floor_generator: 1.2.0
@@ -61,3 +62,10 @@ flutter:
   assets:
     - assets/images/gif_no_data.gif
     - assets/images/img_background_factory.jpg
+    - assets/images/img_logo_apps.png
+    - assets/icons/ic_launcher_round.png
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/ic_launcher_round.png"
