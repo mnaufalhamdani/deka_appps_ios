@@ -4,7 +4,7 @@ import '../../core/data/data_state.dart';
 import '../rekap_izin_repository.dart';
 
 abstract class GetViewCutiUseCaseImpl<Type, Params> {
-  Future<Type> getViewCuti({Params nik});
+  Future<Type> getViewCuti();
 }
 
 class GetViewCutiUseCase implements GetViewCutiUseCaseImpl<DataState<ViewCutiModel>, String> {
@@ -12,7 +12,7 @@ class GetViewCutiUseCase implements GetViewCutiUseCaseImpl<DataState<ViewCutiMod
   GetViewCutiUseCase(this._repository);
 
   @override
-  Future<DataState<ViewCutiModel>> getViewCuti({String ? nik}) {
-    return _repository.getViewCuti(nik!);
+  Future<DataState<ViewCutiModel>> getViewCuti() {
+    return _repository.getViewCuti();
   }
 }

@@ -25,7 +25,7 @@ class AccountServiceImpl implements AccountService {
       final extra = <String, dynamic>{};
       final headers = <String, dynamic>{};
       final params = <String, dynamic>{};
-      final data = FormData.fromMap({
+      final formData = FormData.fromMap({
         'username' : username,
         'password' : password,
         'firebase_id' : firebaseId
@@ -33,7 +33,7 @@ class AccountServiceImpl implements AccountService {
 
       final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
       final result = await _dio.request('login',
-          data: data,
+          data: formData,
           queryParameters: params,
           options: options
       );

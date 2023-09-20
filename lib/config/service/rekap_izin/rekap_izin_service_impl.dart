@@ -21,13 +21,13 @@ class RekapIzinServiceImpl implements RekapIzinService {
       final extra = <String, dynamic>{};
       final headers = <String, dynamic>{};
       final params = <String, dynamic>{};
-      final data = FormData.fromMap({
+      final formData = FormData.fromMap({
         'nik': nik
       });
 
       final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
       final result = await _dio.request('perizinan/list',
-          data: data,
+          data: formData,
           queryParameters: params,
           options: options
       );
@@ -51,19 +51,47 @@ class RekapIzinServiceImpl implements RekapIzinService {
       final extra = <String, dynamic>{};
       final headers = <String, dynamic>{};
       final params = <String, dynamic>{};
-      final data = FormData.fromMap({
+      final formData = FormData.fromMap({
         'nik': nik
       });
 
       final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
       final result = await _dio.request('perizinan/view-cuti',
-          data: data,
+          data: formData,
           queryParameters: params,
           options: options
       );
 
       if(result.statusCode == HttpStatus.ok) {
         ViewCutiModel value = ViewCutiModel.fromJson(result.data!['data']);
+        return HttpResponse(value, result);
+      } else {
+        throw ErrorModel.fromRequest(result.data);
+      }
+    }on DioError catch (e){
+      throw ErrorModel(message: e.message.toString());
+    }
+  }
+
+  @override
+  Future<HttpResponse<GeneralModel>> saveRekapIzin({data}) async {
+    try {
+      final extra = <String, dynamic>{};
+      final headers = <String, dynamic>{};
+      final params = <String, dynamic>{};
+      final formData = FormData.fromMap({
+        'data': data
+      });
+
+      final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
+      final result = await _dio.request('perizinan/pengajuan-izin',
+          data: formData,
+          queryParameters: params,
+          options: options
+      );
+
+      if(result.statusCode == HttpStatus.ok) {
+        GeneralModel value = GeneralModel.fromJson(result.data);
         return HttpResponse(value, result);
       } else {
         throw ErrorModel.fromRequest(result.data);

@@ -4,6 +4,7 @@ import 'package:deka_appps_ios/di/di.dart';
 import 'package:deka_appps_ios/resource/theme.dart';
 import 'package:deka_appps_ios/ui/dashboard/dashboard.dart';
 import 'package:deka_appps_ios/ui/login/login.dart';
+import 'package:deka_appps_ios/ui/rekap_izin/input/input_rekap_izin.dart';
 import 'package:deka_appps_ios/ui/rekap_izin/rekap_izin.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: theme(),
       debugShowCheckedModeBanner: true,
-      initialRoute: Login.nameRoute,
+      initialRoute: Dashboard.nameRoute,
       routes: {
         Login.nameRoute: (context) => Login(),
         Dashboard.nameRoute: (context) => Dashboard(),
         RekapIzin.nameRoute: (context) => RekapIzin(),
+        InputRekapIzin.nameRoute: (context) => InputRekapIzin(),
       },
     );
   }

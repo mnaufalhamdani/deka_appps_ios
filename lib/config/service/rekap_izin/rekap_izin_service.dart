@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:deka_appps_ios/extensions/constants.dart';
+import 'package:deka_appps_ios/models/response/general_model.dart';
 import 'package:deka_appps_ios/models/response/rekap_izin_model.dart';
 import 'package:deka_appps_ios/models/response/view_cuti_model.dart';
 import 'package:dio/dio.dart';
@@ -18,6 +19,12 @@ abstract class RekapIzinService {
   @POST('perizinan/list')
   Future<HttpResponse<List<RekapIzinModel>>> getRekapIzin({
     @Field("nik") String ? nik
+  });
+
+  @FormUrlEncoded()
+  @POST('perizinan/pengajuan-izin')
+  Future<HttpResponse<GeneralModel>> saveRekapIzin({
+    @Field("data") String ? data
   });
 
   @FormUrlEncoded()

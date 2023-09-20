@@ -24,13 +24,13 @@ class SyncDataMasterServiceImpl implements SyncDataMasterService {
         'user_id': user_id,
         'date': date,
       };
-      final data = FormData.fromMap({
+      final formData = FormData.fromMap({
         'slug_database': slug_database
       });
 
       final options = Options(method: 'POST', headers: headers, extra: extra, validateStatus: (status) => true);
       final result = await _dio.request('sync-data-master',
-          data: data,
+          data: formData,
           queryParameters: params,
           options: options
       );

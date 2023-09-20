@@ -16,3 +16,21 @@ const String varIzinDisetujui = "Izin Disetujui";
 const String varIzinDitolak = "Izin Ditolak";
 const String varUsername = "Username";
 const String varPassword = "Password";
+
+List<String> listTipeIzin = [
+  "Full Day",
+  "Half Day",
+];
+
+List<String> listKategoriIzin1 = [
+  "Cuti",
+  "Sakit",
+  "Menikah"
+];
+
+List<String> listKategoriIzin2 = [
+  "Izin Keluar",
+  "Izin Pulang Cepat",
+  "Izin Datang Terlambat",
+  "Izin Keperluan Mendadak",
+];

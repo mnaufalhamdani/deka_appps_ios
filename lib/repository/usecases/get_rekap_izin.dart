@@ -4,7 +4,7 @@ import '../../core/data/data_state.dart';
 import '../rekap_izin_repository.dart';
 
 abstract class GetRekapIzinUseCaseImpl<Type, Params> {
-  Future<Type> getRekapIzin({Params nik});
+  Future<Type> getRekapIzin();
 }
 
 class GetRekapIzinUseCase implements GetRekapIzinUseCaseImpl<DataState<List<RekapIzinModel>>, String> {
@@ -12,7 +12,7 @@ class GetRekapIzinUseCase implements GetRekapIzinUseCaseImpl<DataState<List<Reka
   GetRekapIzinUseCase(this._repository);
 
   @override
-  Future<DataState<List<RekapIzinModel>>> getRekapIzin({String ? nik}) {
-    return _repository.getRekapIzin(nik!);
+  Future<DataState<List<RekapIzinModel>>> getRekapIzin() {
+    return _repository.getRekapIzin();
   }
 }

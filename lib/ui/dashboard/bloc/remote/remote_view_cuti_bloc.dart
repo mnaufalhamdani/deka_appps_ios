@@ -15,7 +15,7 @@ class RemoteViewCutiBloc extends Bloc<RemoteViewCutiEvent, BaseBlocState>{
 
   void onLoad(GetViewCuti event, Emitter <BaseBlocState> emit) async {
     emit(BaseResponseLoading());
-    final dataState = await useCase.getViewCuti(nik: event.nik);
+    final dataState = await useCase.getViewCuti();
 
     if (dataState is DataSuccess) {
       emit(ViewCutiResponseDone(dataState.data!));
@@ -29,12 +29,11 @@ class RemoteViewCutiBloc extends Bloc<RemoteViewCutiEvent, BaseBlocState>{
 
 //Event
 abstract class RemoteViewCutiEvent {
-  final String ? nik;
-  const RemoteViewCutiEvent({this.nik});
+  const RemoteViewCutiEvent();
 }
 
 class GetViewCuti extends RemoteViewCutiEvent {
-  GetViewCuti(String nik) : super(nik: nik);
+  GetViewCuti() : super();
 }
 
 //State

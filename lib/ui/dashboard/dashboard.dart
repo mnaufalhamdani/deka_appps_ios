@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       BlocProvider<RemoteViewCutiBloc>(
           create: (context) =>
-          get()..add(GetViewCuti(NIK_EXAMPLE))
+          get()..add(GetViewCuti())
       ),
     ], child: Scaffold(
       body: SingleChildScrollView(
@@ -220,7 +220,7 @@ class _DashboardState extends State<Dashboard> {
                       setState(() {
                         BlocProvider.of<RemoteViewCutiBloc>(
                             context, listen: false)
-                            .add(GetViewCuti(NIK_EXAMPLE));
+                            .add(GetViewCuti());
                       });
                     })
               ],
