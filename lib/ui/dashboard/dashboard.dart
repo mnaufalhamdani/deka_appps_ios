@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deka_appps_ios/core/data/bloc_state.dart';
 import 'package:deka_appps_ios/di/di.dart';
 import 'package:deka_appps_ios/extensions/constants.dart';
@@ -130,10 +131,19 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       Container(
                         padding: EdgeInsets.only(left: 10),
-                        child: CircleAvatar(
-                          radius: 18,
-                          backgroundImage: NetworkImage(photo ?? "https://webfuzo.duakelinci.id:9393/img/duakelinci-transparant.png"),
-                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: photo ?? "https://webfuzo.duakelinci.id:9393/img/duakelinci-transparant.png",
+                          placeholder: (context, url) => CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => Icon(Icons.error_rounded),
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover)
+                            ),
+                          ),
+                        )
                       ),
                       Expanded(child: Container()),
                       Container(
