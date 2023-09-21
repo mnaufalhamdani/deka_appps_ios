@@ -110,9 +110,7 @@ class _DashboardState extends State<Dashboard> {
             height: 200,
             decoration: BoxDecoration(
               color: colorPrimary,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
               image: DecorationImage(
                 image: AssetImage(
                     "assets/images/img_background_factory.jpg"),

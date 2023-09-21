@@ -37,6 +37,15 @@ dependencies:
   #chached image
   cached_network_image: ^3.2.0
 
+  #image picker
+  image_picker: ^0.8.6
+
+  #compressor
+  flutter_image_compress: ^2.0.0
+
+  #get folder path
+  path_provider: ^2.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

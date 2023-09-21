@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
 import 'package:deka_appps_ios/core/data/bloc_state.dart';
 import 'package:deka_appps_ios/extensions/constants.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/local/local_profile_bloc.dart';
@@ -7,7 +8,10 @@ import 'package:deka_appps_ios/ui/rekap_izin/input/bloc/remote/remote_save_rekap
 import 'package:deka_appps_ios/ui/rekap_izin/input/item/input_rekap_izin_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../di/di.dart';
 import '../../../models/domain/save_rekap_izin_domain.dart';
@@ -26,6 +30,7 @@ class _InputRekapIzinState extends State<InputRekapIzin> {
   final saveDomain = SaveRekapIzinDomain();
   final _formKey = GlobalKey<FormState>();
   var isLoading = false;
+  File? selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +241,44 @@ class _InputRekapIzinState extends State<InputRekapIzin> {
                         ),
                       )
                   ),
+                  Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black54),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Column(children: [
+                        Row(children: [
+                          Padding(padding: EdgeInsets.only(left: 20, right: 10),
+                              child: Text("Foto Ke 1")
+                          ),
+                          Expanded(child: Container()),
+                          IconButton(
+                              icon: const Icon(Icons.edit, color: Colors.amber),
+                              onPressed: () {
+                                _dialogPhoto();
+                              }
+                          ),
+                          IconButton(
+                              icon: const Icon(Icons.add_rounded, color: Colors.lightGreen),
+                              onPressed: () {}
+                          )
+                        ]),
+                        Container(
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                              image: DecorationImage(
+                                  image: FileImage(selectedImage ?? File("")),
+                                  fit: BoxFit.cover
+                              ),
+                            )
+                        )
+                      ]),
+                    ),
+                  ),
                   Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                       child: SizedBox(
                         width: double.infinity,
@@ -392,5 +435,15 @@ class _InputRekapIzinState extends State<InputRekapIzin> {
         saveDomain.end_date_name = DateFormat("dd-MM-yyyy").format(DateTime.parse(_picked.toString().split(" ")[0]));
       });
     }
+  }
+
+  Future<void> _dialogPhoto() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 70);
+    if(picked == null) return;
+
+    setState(() {
+      saveDomain.photo_1_temp = picked.path;
+      selectedImage = File(picked.path);
+    });
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deka_appps_ios/config/service/rekap_izin/rekap_izin_service.dart';
 import 'package:deka_appps_ios/models/domain/save_rekap_izin_domain.dart';
@@ -73,11 +74,16 @@ class RekapIzinRepositoryImpl extends RekapIzinRepository {
   @override
   Future<DataState<String>> saveRekapIzin(SaveRekapIzinDomain domain) async {
     try {
+      if(domain.photo_1_temp != null){
+        final imageBytes = await File(domain.photo_1_temp!).readAsBytes();
+        final photoBase64 = base64Encode(imageBytes);
+
+        domain.photo_1 = "data:@file/png;base64,$photoBase64";
+      }
       domain.latitude = "37.4219983";
       domain.longitude = "-122.084";
 
       final data = jsonEncode(domain);
-      print(data.toString());
       final httpResponse = await _rekapIzinService.saveRekapIzin(data: data.toString());
 
       return DataSuccess(httpResponse.data.message!);

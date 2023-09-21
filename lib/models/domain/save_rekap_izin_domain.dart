@@ -17,6 +17,7 @@ class SaveRekapIzinDomain{
   String? keterangan;
   String? status_kembali;
   String? photo_1;
+  String? photo_1_temp;
   String? photo_2;
   String? photo_3;
 
@@ -38,7 +39,7 @@ class SaveRekapIzinDomain{
     this.reason_name,
     this.keterangan,
     this.status_kembali,
-    this.photo_1,
+    this.photo_1_temp,
     this.photo_2,
     this.photo_3,
   });
