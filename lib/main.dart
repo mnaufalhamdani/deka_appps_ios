@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: theme(),
       debugShowCheckedModeBanner: true,
-      initialRoute: Dashboard.nameRoute,
+      initialRoute: Login.nameRoute,
       routes: {
         Login.nameRoute: (context) => Login(),
         Dashboard.nameRoute: (context) => Dashboard(),
