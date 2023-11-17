@@ -2,14 +2,20 @@ import 'package:deka_appps_ios/config/database_config.dart';
 import 'package:deka_appps_ios/config/service/account/account_service.dart';
 import 'package:deka_appps_ios/config/service/rekap_izin/rekap_izin_service.dart';
 import 'package:deka_appps_ios/repository/login_repository.dart';
+import 'package:deka_appps_ios/repository/usecases/get_check_nik.dart';
 import 'package:deka_appps_ios/repository/usecases/get_login.dart';
+import 'package:deka_appps_ios/repository/usecases/get_reset.dart';
 import 'package:deka_appps_ios/repository/usecases/get_sync_data_master.dart';
 import 'package:deka_appps_ios/repository/usecases/get_view_cuti.dart';
+import 'package:deka_appps_ios/repository/usecases/save_register.dart';
 import 'package:deka_appps_ios/repository/usecases/save_rekap_izin.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/local/local_profile_bloc.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_sync_data_master_bloc.dart';
 import 'package:deka_appps_ios/ui/dashboard/bloc/remote/remote_view_cuti_bloc.dart';
 import 'package:deka_appps_ios/ui/login/bloc/remote/remote_login_bloc.dart';
+import 'package:deka_appps_ios/ui/login/register/bloc/remote/remote_check_nik_bloc.dart';
+import 'package:deka_appps_ios/ui/login/register/bloc/remote/remote_register_bloc.dart';
+import 'package:deka_appps_ios/ui/login/reset/bloc/remote/remote_reset_bloc.dart';
 import 'package:deka_appps_ios/ui/rekap_izin/input/bloc/remote/remote_save_rekap_izin_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -49,8 +55,11 @@ Future<void> dependencyInjection() async {
   get.registerSingleton<GetRekapIzinUseCase>(GetRekapIzinUseCase(get()));
   get.registerSingleton<GetViewCutiUseCase>(GetViewCutiUseCase(get()));
   get.registerSingleton<GetLoginUseCase>(GetLoginUseCase(get()));
+  get.registerSingleton<GetResetUseCase>(GetResetUseCase(get()));
+  get.registerSingleton<GetCheckNikUseCase>(GetCheckNikUseCase(get()));
 
   get.registerSingleton<SaveRekapIzinUseCase>(SaveRekapIzinUseCase(get()));
+  get.registerSingleton<SaveRegisterUseCase>(SaveRegisterUseCase(get()));
   //endregion
 
   //region - Bloc - REMOTE
@@ -59,6 +68,9 @@ Future<void> dependencyInjection() async {
   get.registerFactory<RemoteLoginBloc>(()=> RemoteLoginBloc(get()));
   get.registerFactory<RemoteSyncDataMasterBloc>(() => RemoteSyncDataMasterBloc(get()));
   get.registerFactory<RemoteSaveRekapIzinBloc>(() => RemoteSaveRekapIzinBloc(get()));
+  get.registerFactory<RemoteResetBloc>(() => RemoteResetBloc(get()));
+  get.registerFactory<RemoteRegisterBloc>(() => RemoteRegisterBloc(get()));
+  get.registerFactory<RemoteCheckNikBloc>(() => RemoteCheckNikBloc(get()));
   //endregion
 
   //region - Bloc - LOCAL

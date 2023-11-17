@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:deka_appps_ios/core/data/bloc_state.dart';
 import 'package:deka_appps_ios/extensions/constants.dart';
 import 'package:deka_appps_ios/models/domain/login_domain.dart';
 import 'package:deka_appps_ios/ui/dashboard/dashboard.dart';
 import 'package:deka_appps_ios/ui/login/bloc/remote/remote_login_bloc.dart';
+import 'package:deka_appps_ios/ui/login/register/register.dart';
+import 'package:deka_appps_ios/ui/login/reset/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +25,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final loginDomain = LoginDomain();
   final _formKey = GlobalKey<FormState>();
-  var isLoading = false;
+  var _isLoading = false;
+  var _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +80,10 @@ class _LoginState extends State<Login> {
         (context) => BlocBuilder<RemoteLoginBloc, BaseBlocState>(
             builder: (_, state) {
             if (state is BaseResponseLoading) {
-              isLoading = true;
+              _isLoading = true;
             }
             if (state is BaseResponseError) {
-              isLoading = false;
+              _isLoading = false;
               WidgetsBinding.instance.addPostFrameCallback((_) =>
                   showSnackBarMessage(
                       context,
@@ -90,7 +93,7 @@ class _LoginState extends State<Login> {
               );
             }
             if (state is LoginResponseDone) {
-              isLoading = false;
+              _isLoading = false;
               WidgetsBinding.instance.addPostFrameCallback((_) =>
                 Navigator.of(context).pushNamedAndRemoveUntil(Dashboard.nameRoute, (Route<dynamic> route) => false)
               );
@@ -144,7 +147,7 @@ class _LoginState extends State<Login> {
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
                       style: TextStyle(fontSize: 15),
-                      obscureText: true,
+                      obscureText: _passwordVisible,
                       validator: (value) {
                         if(value == null || value.isEmpty){
                           return "Isian ini masih kosong";
@@ -160,7 +163,18 @@ class _LoginState extends State<Login> {
                           prefixIcon: Icon(Icons.lock_outline),
                           prefixIconColor: Colors.black54,
                           filled: true,
-                          fillColor: Colors.black12
+                          fillColor: Colors.black12,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          )
                       ),
                     )
                 ),
@@ -168,7 +182,9 @@ class _LoginState extends State<Login> {
                     child: Container(
                         alignment: Alignment.topRight,
                         child: TextButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.of(context).pushNamed(ResetPassword.nameRoute);
+                          },
                           child: Text("Reset Password", style: TextStyle(color: colorText)),
                         )
                     )
@@ -176,34 +192,32 @@ class _LoginState extends State<Login> {
                 Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                     child: SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton.icon(
-                        icon: isLoading ? Container(
-                          padding: const EdgeInsets.all(2.0),
-                          child: const CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 3,
-                          ),
-                        ) : const Icon(Icons.login),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            BlocProvider.of<RemoteLoginBloc>(context, listen: false).add(GetLogin(loginDomain.username.toString(), loginDomain.password.toString()));
-                          }
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                            MaterialStateProperty.all(
-                                colorPrimaryDark),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(
-                                        20)))),
-                        label: Text("L O G I N",
+                      child: ElevatedButton(
+                        child: _isLoading ? Padding(padding: EdgeInsets.all(5), child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ))) : Text("L O G I N",
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800
                             )),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            if (!_isLoading) BlocProvider.of<RemoteLoginBloc>(context, listen: false).add(GetLogin(loginDomain.username.toString(), loginDomain.password.toString()));
+                          }
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: _isLoading ? MaterialStateProperty.all(Colors.grey) : MaterialStateProperty.all(colorPrimaryDark),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(
+                                        20
+                                    )
+                                )
+                            )
+                        ),
                       ),
                     )
                 ),//Button Login
@@ -220,7 +234,9 @@ class _LoginState extends State<Login> {
                     child: Container(
                         alignment: Alignment.center,
                         child: TextButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.of(context).pushNamed(Register.nameRoute);
+                          },
                           child: Text("Daftar Sekarang ?", style: TextStyle(
                               color: colorText,
                               fontWeight: FontWeight.w800)

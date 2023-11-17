@@ -18,10 +18,13 @@ showSnackBarMessage(BuildContext context, TypeMessage typeMessage, String messag
   }
 
   final snackBar = SnackBar(
-      content: Text(message),
-      backgroundColor: colorTypeMessage,
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: durationMessage)
+    content: Text(message),
+    backgroundColor: colorTypeMessage,
+    behavior: SnackBarBehavior.floating,
+    duration: Duration(seconds: durationMessage),
+    shape:  RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
