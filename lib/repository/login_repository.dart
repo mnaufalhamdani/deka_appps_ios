@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deka_appps_ios/config/service/account/account_service.dart';
+import 'package:deka_appps_ios/core/data/device_info.dart';
 import 'package:deka_appps_ios/models/domain/register_domain.dart';
 
 import '../config/database_config.dart';
@@ -102,6 +103,11 @@ class LoginRepositoryImpl extends LoginRepository {
   @override
   Future<DataState<GeneralModel>> register(RegisterDomain domain) async {
     try {
+      final deviceInfo = await getDeviceInfo();
+      domain.device_brand = deviceInfo.brand;
+      domain.device_type = deviceInfo.model;
+      domain.device_id = deviceInfo.deviceId;
+
       if(domain.foto_temp != null){
         final imageBytes = await File(domain.foto_temp!).readAsBytes();
         final photoBase64 = base64Encode(imageBytes);
