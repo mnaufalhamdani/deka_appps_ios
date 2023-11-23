@@ -65,7 +65,7 @@ class LoginRepositoryImpl extends LoginRepository {
   @override
   Future<void> insertProfile(LoginModel model) {
     final profileMapper = ProfileMapper(model);
-    return _databaseConfig.profileDao.insertProfile(profileMapper);
+    return _databaseConfig.profileDao.insertEntity(profileMapper);
   }
 
   @override

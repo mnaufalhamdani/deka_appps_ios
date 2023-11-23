@@ -8,7 +8,7 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 class ProfileDaoImpl extends ProfileDao {
   ProfileDaoImpl(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database),
-        _profileInsertionAdapter = InsertionAdapter(
+        _insertionAdapter = InsertionAdapter(
             database,
             'profile',
                 (ProfileEntity item) => <String, Object?>{
@@ -45,7 +45,45 @@ class ProfileDaoImpl extends ProfileDao {
               'createdAt': item.createdAt,
               'updatedAt': item.updatedAt,
             }),
-        _profileDeletionAdapter = DeletionAdapter(
+        _updateAdapter = UpdateAdapter(
+            database,
+            'profile',
+            ['userId'],
+                (ProfileEntity item) => <String, Object?>{
+              'userId' : item.userId,
+              'nik' : item.nik,
+              'username' : item.username,
+              'password' : item.password,
+              'typeuserCode' : item.typeuserCode,
+              'typeuserName' : item.typeuserName,
+              'code' : item.code,
+              'name' : item.name,
+              'address' : item.address,
+              'tempatLahir' : item.tempatLahir,
+              'tglLahir' : item.tglLahir,
+              'tglMasuk' : item.tglMasuk,
+              'email' : item.email,
+              'phone1' : item.phone1,
+              'phone2' : item.phone2,
+              'photo' : item.photo,
+              'photoKtp' : item.photoKtp,
+              'noKtp' : item.noKtp,
+              'typeuserId' : item.typeuserId,
+              'divisiCode' : item.divisiCode,
+              'jabatanCode' : item.jabatanCode,
+              'deviceId' : item.deviceId,
+              'deviceBrand' : item.deviceBrand,
+              'deviceType' : item.deviceType,
+              'firebaseId' : item.firebaseId,
+              'costCenterCode' : item.costCenterCode,
+              'lokasi' : item.lokasi,
+              'organizationLevel' : item.organizationLevel,
+              'status': item.status,
+              'statusKirim': item.statusKirim,
+              'createdAt': item.createdAt,
+              'updatedAt': item.updatedAt,
+            }),
+        _deletionAdapter = DeletionAdapter(
             database,
             'profile',
             ['userId'],
@@ -90,26 +128,25 @@ class ProfileDaoImpl extends ProfileDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ProfileEntity> _profileInsertionAdapter;
+  final InsertionAdapter<ProfileEntity> _insertionAdapter;
 
-  final DeletionAdapter<ProfileEntity> _profileDeletionAdapter;
+  final UpdateAdapter<ProfileEntity> _updateAdapter;
+
+  final DeletionAdapter<ProfileEntity> _deletionAdapter;
 
   @override
-  Future<List<ProfileEntity>> getProfile() async {
-    return _queryAdapter.queryList('SELECT * FROM profile',
-        mapper: (Map<String, Object?> row) => _profileMapper(row)
-    );
+  Future<void> insertEntity(ProfileEntity model) async {
+    await _insertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> insertProfile(ProfileEntity model) async {
-    await _profileInsertionAdapter.insert(
-        model, OnConflictStrategy.replace);
+  Future<void> updateEntity(ProfileEntity model) async {
+    await _updateAdapter.update(model, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> deleteProfile(ProfileEntity model) async {
-    await _profileDeletionAdapter.delete(model);
+  Future<void> deleteEntity(ProfileEntity model) async {
+    await _deletionAdapter.delete(model);
   }
 
   @override
@@ -117,7 +154,14 @@ class ProfileDaoImpl extends ProfileDao {
     await _queryAdapter.queryNoReturn('DELETE FROM profile');
   }
 
-  ProfileEntity _profileMapper(Map<String, Object?> row) {
+  @override
+  Future<List<ProfileEntity>> getProfile() async {
+    return _queryAdapter.queryList('SELECT * FROM profile',
+        mapper: (Map<String, Object?> row) => _mapper(row)
+    );
+  }
+
+  ProfileEntity _mapper(Map<String, Object?> row) {
     return ProfileEntity(
       userId: row['userId'] as String?,
       nik: row['nik'] as String?,

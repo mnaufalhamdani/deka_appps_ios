@@ -42,4 +42,23 @@ Map<int, String> migrationScripts = {
         `createdAt` TEXT, 
         `updatedAt` TEXT,
         PRIMARY KEY (`code`))''',
+  7: '''CREATE TABLE IF NOT EXISTS `master_reason` (
+        `code` TEXT, 
+        `name` TEXT, 
+        `type` INTEGER,
+        `keterangan` TEXT,
+        `potong_cuti` TEXT,
+        `status` INTEGER, 
+        `statusKirim` INTEGER, 
+        `createdAt` TEXT, 
+        `updatedAt` TEXT,
+        PRIMARY KEY (`code`))''',
+  8: '''CREATE TABLE IF NOT EXISTS `master_reason_type` (
+        `id` INTEGER, 
+        `name` TEXT,
+        `status` INTEGER, 
+        `statusKirim` INTEGER, 
+        `createdAt` TEXT, 
+        `updatedAt` TEXT,
+        PRIMARY KEY (`id`))''',
 };

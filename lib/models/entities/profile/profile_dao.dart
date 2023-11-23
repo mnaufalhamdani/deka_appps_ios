@@ -3,15 +3,18 @@ import 'package:floor/floor.dart';
 
 @dao
 abstract class ProfileDao {
-  @Insert()
-  Future<void> insertProfile(ProfileEntity model);
+  @Insert(onConflict: OnConflictStrategy.replace)
+  Future<void> insertEntity(ProfileEntity model);
+
+  @Update(onConflict: OnConflictStrategy.replace)
+  Future<void> updateEntity(ProfileEntity model);
 
   @delete
-  Future<void> deleteProfile(ProfileEntity model);
-
-  @Query('SELECT * FROM profile')
-  Future<List<ProfileEntity>> getProfile();
+  Future<void> deleteEntity(ProfileEntity model);
 
   @Query('DELETE FROM profile')
   Future<void> deleteAll();
+
+  @Query('SELECT * FROM profile')
+  Future<List<ProfileEntity>> getProfile();
 }

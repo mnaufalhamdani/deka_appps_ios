@@ -3,11 +3,14 @@ import 'package:floor/floor.dart';
 
 @dao
 abstract class PengaturanAutocodeAndroidDao {
-  @Insert()
-  Future<void> insertPengaturanAutocodeAndroid(PengaturanAutocodeAndroidEntity model);
+  @Insert(onConflict: OnConflictStrategy.replace)
+  Future<void> insertEntity(PengaturanAutocodeAndroidEntity model);
+
+  @Update(onConflict: OnConflictStrategy.replace)
+  Future<void> updateEntity(PengaturanAutocodeAndroidEntity model);
 
   @delete
-  Future<void> deletePengaturanAutocodeAndroid(PengaturanAutocodeAndroidEntity model);
+  Future<void> deleteEntity(PengaturanAutocodeAndroidEntity model);
 
   @Query('DELETE FROM pengaturan_autocode_android')
   Future<void> deleteAll();

@@ -95,4 +95,12 @@ class _$DatabaseConfig extends DatabaseConfig {
   PengaturanAutocodeAndroidDao? _pengaturanAutocodeAndroidDao;
   @override
   PengaturanAutocodeAndroidDao get pengaturanAutocodeAndroidDao => _pengaturanAutocodeAndroidDao ??= PengaturanAutocodeAndroidDaoImpl(database, changeListener);
+
+  MasterReasonDao? _masterReasonDao;
+  @override
+  MasterReasonDao get masterReasonDao => _masterReasonDao ??= MasterReasonDaoImpl(database, changeListener);
+
+  MasterReasonTypeDao? _masterReasonTypeDao;
+  @override
+  MasterReasonTypeDao get masterReasonTypeDao => _masterReasonTypeDao ??= MasterReasonTypeDaoImpl(database, changeListener);
 }
