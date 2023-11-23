@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:deka_appps_ios/extensions/constants.dart';
 import 'package:deka_appps_ios/models/response/sync_data_master_model.dart';
 import 'package:intl/intl.dart';
 
@@ -10,13 +13,15 @@ import '../models/response/error_model.dart';
 import '../models/response/login_model.dart';
 
 abstract class SyncDataMasterRepository {
-  Future<DataState<SyncDataMasterModel>> syncDataMaster();
-
   Future<DataState<ProfileEntity>> getProfile();
 
   Future<void> deleteProfileAll();
 
   Future<void> insertProfile(LoginModel model);
+
+  Future<DataState<SyncDataMasterModel>> syncDataMaster();
+
+  Future<DataState<SyncDataMasterModel>> updateMasterReasonType(SyncDataMasterModel model);
 }
 
 class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
@@ -24,24 +29,6 @@ class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
   final DatabaseConfig _databaseConfig;
 
   SyncDataMasterRepositoryImpl(this._syncDataMasterService, this._databaseConfig);
-
-  @override
-  Future<DataState<SyncDataMasterModel>> syncDataMaster() async {
-    try {
-      final profile = await getProfile();
-      String slugDatabase = """[{"code":"last-sync-hc_reason","count":null,"value":"0","created_at":"2022-01-21 11:22:39","status":1,"status_kirim":"NOT_SENT","updated_at":"2022-01-21 11:22:39"},{"code":"last-sync-hc_reason_type","count":null,"value":"0","created_at":"2022-01-21 11:22:39","status":1,"status_kirim":"NOT_SENT","updated_at":"2022-01-21 11:22:39"},{"code":"last-sync-hc_data_pic","count":null,"value":"0","created_at":"2022-01-21 11:22:39","status":1,"status_kirim":"NOT_SENT","updated_at":"2022-01-21 11:22:39"},{"code":"last-sync-android_auth_menu","count":null,"value":"0","created_at":"2022-01-21 11:22:39","status":1,"status_kirim":"NOT_SENT","updated_at":"2022-01-21 11:22:39"}]""";
-
-      final httpResponse = await _syncDataMasterService.syncDataMaster(
-          user_id: profile.data!.userId,
-          date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-          slug_database: slugDatabase
-      );
-
-      return DataSuccess(httpResponse.data);
-    } on ErrorModel catch (e) {
-      throw DataFailed(e);
-    }
-  }
 
   @override
   Future<DataState<ProfileEntity>> getProfile() async {
@@ -60,5 +47,35 @@ class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
   @override
   Future<void> deleteProfileAll() {
     return _databaseConfig.profileDao.deleteAll();
+  }
+
+  @override
+  Future<DataState<SyncDataMasterModel>> syncDataMaster() async {
+    try {
+      final profile = await getProfile();
+      for (var item in listPengaturanAutocode){
+        final pengaturanAutocode = await _databaseConfig.pengaturanAutocodeAndroidDao.getPengaturanAutocodeAndroidOne(item.code!);
+        if(pengaturanAutocode.isEmpty){
+          _databaseConfig.pengaturanAutocodeAndroidDao.insertPengaturanAutocodeAndroid(item);
+        }
+      }
+
+      final slugPengaturanAutocodes = await _databaseConfig.pengaturanAutocodeAndroidDao.getPengaturanAutocodeAndroid();
+
+      final httpResponse = await _syncDataMasterService.syncDataMaster(
+          user_id: profile.data!.userId,
+          date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          slug_database: jsonEncode(slugPengaturanAutocodes)
+      );
+
+      return DataSuccess(httpResponse.data);
+    } on ErrorModel catch (e) {
+      throw DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<SyncDataMasterModel>> updateMasterReasonType(SyncDataMasterModel model) async {
+    return DataSuccess(model);
   }
 }

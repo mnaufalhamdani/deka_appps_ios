@@ -33,4 +33,13 @@ Map<int, String> migrationScripts = {
   3: '''ALTER TABLE `profile` ADD `statusKirim` INTEGER''',
   4: '''ALTER TABLE `profile` ADD `createdAt` TEXT''',
   5: '''ALTER TABLE `profile` ADD `updatedAt` TEXT''',
+  6: '''CREATE TABLE IF NOT EXISTS `pengaturan_autocode_android` (
+        `code` TEXT, 
+        `value` TEXT, 
+        `count` TEXT,
+        `status` INTEGER, 
+        `statusKirim` INTEGER, 
+        `createdAt` TEXT, 
+        `updatedAt` TEXT,
+        PRIMARY KEY (`code`))''',
 };

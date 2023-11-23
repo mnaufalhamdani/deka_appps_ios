@@ -1,5 +1,7 @@
 import 'package:deka_appps_ios/core/single_select/single_select_domain.dart';
 
+import '../models/entities/pengaturan_autocode_android/pengaturan_autocode_android.dart';
+
 const String BASE_URL = "https://appdk-trial.duakelinci.id:9393/api/webusagi/v2/hc/";
 const int BASE_TIMEOUT = 60000 * 1;//1 MENIT
 const String TYPE_APLIKASI = "hc";
@@ -42,4 +44,13 @@ List<String> listKategoriIzin2 = [
   "Izin Pulang Cepat",
   "Izin Datang Terlambat",
   "Izin Keperluan Mendadak",
+];
+
+List<PengaturanAutocodeAndroidEntity> listPengaturanAutocode = [
+  PengaturanAutocodeAndroidEntity(code: "last-sync-hc_reason", value: "0"),
+  PengaturanAutocodeAndroidEntity(code: "last-sync-hc_reason_type", value: "0"),
+  PengaturanAutocodeAndroidEntity(code: "last-sync-hc_data_pic", value: "0"),
+  PengaturanAutocodeAndroidEntity(code: "last-sync-android_auth_menu", value: "0"),
+  PengaturanAutocodeAndroidEntity(code: "hc-address", value: "0"),
+  PengaturanAutocodeAndroidEntity(code: "hc-contact", value: "0"),
 ];

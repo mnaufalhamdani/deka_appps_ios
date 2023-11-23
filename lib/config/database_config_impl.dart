@@ -88,9 +88,11 @@ class _$DatabaseConfig extends DatabaseConfig {
     return sqfliteDatabaseFactory.openDatabase(path, options: databaseOptions);
   }
 
-  ProfileDao? _profileDaoInstance;
+  ProfileDao? _profileDao;
   @override
-  ProfileDao get profileDao {
-    return _profileDaoInstance ??= ProfileDaoImpl(database, changeListener);
-  }
+  ProfileDao get profileDao => _profileDao ??= ProfileDaoImpl(database, changeListener);
+
+  PengaturanAutocodeAndroidDao? _pengaturanAutocodeAndroidDao;
+  @override
+  PengaturanAutocodeAndroidDao get pengaturanAutocodeAndroidDao => _pengaturanAutocodeAndroidDao ??= PengaturanAutocodeAndroidDaoImpl(database, changeListener);
 }

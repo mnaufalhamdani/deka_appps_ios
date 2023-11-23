@@ -1,40 +1,41 @@
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
+import 'package:intl/intl.dart';
 
 @Entity(tableName: 'profile', primaryKeys: ['userId'])
 class ProfileEntity extends Equatable {
-  final String? userId;
-  final String? nik;
-  final String? username;
-  final String? password;
-  final String? typeuserCode;
-  final String? typeuserName;
-  final String? code;
-  final String? name;
-  final String? address;
-  final String? tempatLahir;
-  final String? tglLahir;
-  final String? tglMasuk;
-  final String? email;
-  final String? phone1;
-  final String? phone2;
-  final String? photo;
-  final String? photoKtp;
-  final String? noKtp;
-  final String? typeuserId;
-  final String? divisiCode;
-  final String? jabatanCode;
-  final String? deviceId;
-  final String? deviceBrand;
-  final String? deviceType;
-  final String? firebaseId;
-  final String? costCenterCode;
-  final String? lokasi;
-  final String? organizationLevel;
-  final int? status;
-  final int? statusKirim;
-  final String? createdAt;
-  final String? updatedAt;
+  String? userId;
+  String? nik;
+  String? username;
+  String? password;
+  String? typeuserCode;
+  String? typeuserName;
+  String? code;
+  String? name;
+  String? address;
+  String? tempatLahir;
+  String? tglLahir;
+  String? tglMasuk;
+  String? email;
+  String? phone1;
+  String? phone2;
+  String? photo;
+  String? photoKtp;
+  String? noKtp;
+  String? typeuserId;
+  String? divisiCode;
+  String? jabatanCode;
+  String? deviceId;
+  String? deviceBrand;
+  String? deviceType;
+  String? firebaseId;
+  String? costCenterCode;
+  String? lokasi;
+  String? organizationLevel;
+  int? status = 1;
+  int? statusKirim = 0;
+  String? createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+  String? updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
   ProfileEntity({
     this.username,
