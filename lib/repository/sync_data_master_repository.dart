@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:deka_appps_ios/extensions/constants.dart';
+import 'package:deka_appps_ios/models/entities/master_reason/master_reason.dart';
 import 'package:deka_appps_ios/models/response/sync_data_master_model.dart';
 import 'package:intl/intl.dart';
 
 import '../config/database_config.dart';
 import '../config/service/other/sync_data_master_service.dart';
 import '../core/data/data_state.dart';
+import '../models/entities/master_reason_type/master_reason_type.dart';
 import '../models/entities/profile/profile.dart';
 import '../models/mapper/profile_mapper.dart';
 import '../models/response/error_model.dart';
@@ -22,6 +24,8 @@ abstract class SyncDataMasterRepository {
   Future<DataState<SyncDataMasterModel>> syncDataMaster();
 
   Future<DataState<SyncDataMasterModel>> updateMasterReasonType(SyncDataMasterModel model);
+
+  Future<DataState<SyncDataMasterModel>> updateMasterReason(SyncDataMasterModel model);
 }
 
 class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
@@ -41,7 +45,7 @@ class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
   @override
   Future<void> insertProfile(LoginModel model) {
     final profileMapper = ProfileMapper(model);
-    return _databaseConfig.profileDao.insertProfile(profileMapper);
+    return _databaseConfig.profileDao.insertEntity(profileMapper);
   }
 
   @override
@@ -53,10 +57,10 @@ class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
   Future<DataState<SyncDataMasterModel>> syncDataMaster() async {
     try {
       final profile = await getProfile();
-      for (var item in listPengaturanAutocode){
+      for (final item in listPengaturanAutocode){
         final pengaturanAutocode = await _databaseConfig.pengaturanAutocodeAndroidDao.getPengaturanAutocodeAndroidOne(item.code!);
         if(pengaturanAutocode.isEmpty){
-          _databaseConfig.pengaturanAutocodeAndroidDao.insertPengaturanAutocodeAndroid(item);
+          _databaseConfig.pengaturanAutocodeAndroidDao.insertEntity(item);
         }
       }
 
@@ -76,6 +80,37 @@ class SyncDataMasterRepositoryImpl extends SyncDataMasterRepository {
 
   @override
   Future<DataState<SyncDataMasterModel>> updateMasterReasonType(SyncDataMasterModel model) async {
+    model.hcReasonType?.forEach((element) async {
+      await _databaseConfig.masterReasonTypeDao.insertEntity(MasterReasonTypeEntity(
+        id: int.parse(element.id!),
+        name: element.name,
+      ));
+    });
+
+    await updatePengaturanAutocode("last-sync-hc_reason_type", model.hcReasonType?.last.updatedAt ?? "0");
     return DataSuccess(model);
+  }
+
+  @override
+  Future<DataState<SyncDataMasterModel>> updateMasterReason(SyncDataMasterModel model) async {
+    model.hcReason?.forEach((element) async {
+      await _databaseConfig.masterReasonDao.insertEntity(MasterReasonEntity(
+          code: element.code,
+          name: element.name,
+          type: int.parse(element.idType!),
+          keterangan: element.keterangan,
+          potong_cuti: element.potongCuti,
+      ));
+    });
+
+    await updatePengaturanAutocode("last-sync-hc_reason", model.hcReasonType?.last.updatedAt ?? "0");
+    return DataSuccess(model);
+  }
+
+  Future<void> updatePengaturanAutocode(String code, String updatedAt) async {
+    final entities = await _databaseConfig.pengaturanAutocodeAndroidDao.getPengaturanAutocodeAndroidOne(code);
+
+    entities.first.value = updatedAt;
+    await _databaseConfig.pengaturanAutocodeAndroidDao.updateEntity(entities.first);
   }
 }

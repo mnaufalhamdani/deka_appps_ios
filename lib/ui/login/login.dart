@@ -92,6 +92,9 @@ class _LoginState extends State<Login> {
                       DurationMessage.LENGTH_SHORT)
               );
             }
+            if (state is SyncDataMasterResponse) {
+              loginDomain.password = state.model;
+            }
             if (state is LoginResponseDone) {
               _isLoading = false;
               WidgetsBinding.instance.addPostFrameCallback((_) =>
@@ -144,6 +147,7 @@ class _LoginState extends State<Login> {
                 ),
                 Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                     child: TextFormField(
+                      controller: TextEditingController()..text = loginDomain.password ?? "",
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
                       style: TextStyle(fontSize: 15),

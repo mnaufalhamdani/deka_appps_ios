@@ -19,9 +19,9 @@ abstract class MasterReasonDao {
   @Query('SELECT * FROM master_reason WHERE status = 1 ORDER BY name ASC')
   Future<List<MasterReasonEntity>> getMasterReason();
 
-  @Query('SELECT * FROM master_reason WHERE status = 1 AND code = :code ORDER BY name ASC')
+  @Query('SELECT * FROM master_reason WHERE status = 1 AND code = ? ORDER BY name ASC')
   Future<List<MasterReasonEntity>> getMasterReasonOne(String code);
 
-  @Query('SELECT * FROM master_reason WHERE status = 1 AND type = :type ORDER BY name ASC')
+  @Query('SELECT * FROM master_reason WHERE status = 1 AND type = ? ORDER BY name ASC')
   Future<List<MasterReasonEntity>> getMasterReasonByType(int type);
 }

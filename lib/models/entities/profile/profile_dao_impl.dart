@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deka_appps_ios/models/entities/profile/profile.dart';
 import 'package:deka_appps_ios/models/entities/profile/profile_dao.dart';
 import 'package:floor/floor.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 class ProfileDaoImpl extends ProfileDao {
@@ -136,11 +137,16 @@ class ProfileDaoImpl extends ProfileDao {
 
   @override
   Future<void> insertEntity(ProfileEntity model) async {
+    model.status = 1;
+    model.statusKirim = 0;
+    model.createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    model.updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     await _insertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 
   @override
   Future<void> updateEntity(ProfileEntity model) async {
+    model.updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     await _updateAdapter.update(model, OnConflictStrategy.replace);
   }
 

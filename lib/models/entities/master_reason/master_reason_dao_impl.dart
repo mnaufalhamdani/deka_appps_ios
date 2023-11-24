@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:floor/floor.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'master_reason.dart';
@@ -68,11 +69,16 @@ class MasterReasonDaoImpl extends MasterReasonDao {
 
   @override
   Future<void> insertEntity(MasterReasonEntity model) async {
+    model.status = 1;
+    model.statusKirim = 0;
+    model.createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    model.updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     await _insertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 
   @override
   Future<void> updateEntity(MasterReasonEntity model) async {
+    model.updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     await _insertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 
@@ -95,14 +101,16 @@ class MasterReasonDaoImpl extends MasterReasonDao {
 
   @override
   Future<List<MasterReasonEntity>> getMasterReasonByType(int type) {
-    return _queryAdapter.queryList('SELECT * FROM master_reason WHERE status = 1 AND type = :type ORDER BY name ASC',
+    return _queryAdapter.queryList('SELECT * FROM master_reason WHERE status = 1 AND type = ? ORDER BY name ASC',
+        arguments: [type],
         mapper: (Map<String, Object?> row) => _mapper(row)
     );
   }
 
   @override
   Future<List<MasterReasonEntity>> getMasterReasonOne(String code) {
-    return _queryAdapter.queryList('SELECT * FROM master_reason WHERE status = 1 AND code = :code ORDER BY name ASC',
+    return _queryAdapter.queryList('SELECT * FROM master_reason WHERE status = 1 AND code = ? ORDER BY name ASC',
+        arguments: [code],
         mapper: (Map<String, Object?> row) => _mapper(row)
     );
   }

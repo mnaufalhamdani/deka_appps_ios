@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 import '../entities/profile/profile.dart';
 import '../response/login_model.dart';
 
@@ -33,9 +31,5 @@ ProfileEntity ProfileMapper(LoginModel model) {
     costCenterCode : model.costCenterCode,
     lokasi : model.lokasi.toString(),
     organizationLevel : model.organizationLevel,
-    status: 1,
-    statusKirim: 0,
-    createdAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-    updatedAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
   );
 }

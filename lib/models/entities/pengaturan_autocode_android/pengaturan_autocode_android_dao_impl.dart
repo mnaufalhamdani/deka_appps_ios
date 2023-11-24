@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deka_appps_ios/models/entities/pengaturan_autocode_android/pengaturan_autocode_android.dart';
 import 'package:deka_appps_ios/models/entities/pengaturan_autocode_android/pengaturan_autocode_android_dao.dart';
 import 'package:floor/floor.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 class PengaturanAutocodeAndroidDaoImpl extends PengaturanAutocodeAndroidDao {
@@ -61,11 +62,16 @@ class PengaturanAutocodeAndroidDaoImpl extends PengaturanAutocodeAndroidDao {
 
   @override
   Future<void> insertEntity(PengaturanAutocodeAndroidEntity model) async {
+    model.status = 1;
+    model.statusKirim = 0;
+    model.createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    model.updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     await _insertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 
   @override
   Future<void> updateEntity(PengaturanAutocodeAndroidEntity model) async {
+    model.updatedAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     await _updateAdapter.update(model, OnConflictStrategy.replace);
   }
 
@@ -87,15 +93,17 @@ class PengaturanAutocodeAndroidDaoImpl extends PengaturanAutocodeAndroidDao {
   }
 
   @override
-  Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroidByCode(String code) {
-    return _queryAdapter.queryList('SELECT * FROM pengaturan_autocode_android WHERE code LIKE :code',
+  Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroidOne(String code) {
+    return _queryAdapter.queryList('SELECT * FROM pengaturan_autocode_android WHERE code = ?',
+        arguments: [code],
         mapper: (Map<String, Object?> row) => _mapper(row)
     );
   }
 
   @override
-  Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroidOne(String code) {
-    return _queryAdapter.queryList('SELECT * FROM pengaturan_autocode_android WHERE code = :code',
+  Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroidByCode(String code) {
+    return _queryAdapter.queryList('SELECT * FROM pengaturan_autocode_android WHERE code LIKE ?',
+        arguments: [code],
         mapper: (Map<String, Object?> row) => _mapper(row)
     );
   }

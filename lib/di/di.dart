@@ -65,7 +65,7 @@ Future<void> dependencyInjection() async {
   //region - Bloc - REMOTE
   get.registerFactory<RemoteRekapIzinBloc>(()=> RemoteRekapIzinBloc(get()));
   get.registerFactory<RemoteViewCutiBloc>(()=> RemoteViewCutiBloc(get()));
-  get.registerFactory<RemoteLoginBloc>(()=> RemoteLoginBloc(get(), get()));
+  get.registerFactory<RemoteLoginBloc>(()=> RemoteLoginBloc(get(), get(), ));
   get.registerFactory<RemoteSyncDataMasterBloc>(() => RemoteSyncDataMasterBloc(get()));
   get.registerFactory<RemoteSaveRekapIzinBloc>(() => RemoteSaveRekapIzinBloc(get()));
   get.registerFactory<RemoteResetBloc>(() => RemoteResetBloc(get()));

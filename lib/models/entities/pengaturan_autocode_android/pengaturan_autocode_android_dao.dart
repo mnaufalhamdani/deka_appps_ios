@@ -18,9 +18,9 @@ abstract class PengaturanAutocodeAndroidDao {
   @Query('SELECT * FROM pengaturan_autocode_android')
   Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroid();
 
-  @Query('SELECT * FROM pengaturan_autocode_android WHERE code = :code')
+  @Query('SELECT * FROM pengaturan_autocode_android WHERE code = ?')
   Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroidOne(String code);
 
-  @Query('SELECT * FROM pengaturan_autocode_android WHERE code LIKE :code')
+  @Query('SELECT * FROM pengaturan_autocode_android WHERE code LIKE ?')
   Future<List<PengaturanAutocodeAndroidEntity>> getPengaturanAutocodeAndroidByCode(String code);
 }

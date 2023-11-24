@@ -21,4 +21,9 @@ class SyncDataMasterUseCase implements SyncDataMasterUseCaseImpl<DataState<SyncD
   Future<DataState<SyncDataMasterModel>> updateMasterReasonType(SyncDataMasterModel model) {
     return _repository.updateMasterReasonType(model);
   }
+
+  @override
+  Future<DataState<SyncDataMasterModel>> updateMasterReason(SyncDataMasterModel model) {
+    return _repository.updateMasterReason(model);
+  }
 }
